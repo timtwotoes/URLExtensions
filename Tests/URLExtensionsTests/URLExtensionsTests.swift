@@ -17,4 +17,42 @@ final class URLExtensionsTests: XCTestCase {
         let url = try XCTUnwrap(components.string)
         XCTAssertEqual(url, "https://example.com/hello/world/test/one")
     }
+    
+    func testURLClosureWithString() throws {
+        let url = try XCTUnwrap(URL(string: "https://example.com") { components in
+            components.append(path: "test")
+        })
+        
+        XCTAssertEqual(url.absoluteString, "https://example.com/test")
+    }
+    
+    func testURLClosureWithBaseURL() throws {
+        let baseURL = try XCTUnwrap(URL(string: "https://example.com"))
+        let url = try XCTUnwrap(URL(baseURL: baseURL) { components in
+            components.append(path: "test")
+        })
+        
+        XCTAssertEqual(url.absoluteString, "https://example.com/test")
+    }
+    
+    func testURLModifyClosure() throws {
+        var url = try XCTUnwrap(URL(string: "https://example.com"))
+        
+        url.modify { components in
+            components.append(path: "test")
+        }
+                
+        XCTAssertEqual(url.absoluteString, "https://example.com/test")
+    }
+    
+    func testURLModifiedClosure() throws {
+        let url = try XCTUnwrap(URL(string: "https://example.com"))
+        
+        let modifiedURL = url.modified { components in
+            components.scheme = "http"
+            components.append(path: "test")
+        }
+        
+        XCTAssertEqual(modifiedURL?.absoluteString, "http://example.com/test")
+    }
 }
