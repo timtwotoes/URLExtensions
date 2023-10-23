@@ -11,42 +11,6 @@ import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 import Foundation
 
-enum URLMacroError: Error, CustomStringConvertible {
-    case requiresStaticStringLiteral
-    case malformedURL(urlString: String)
-
-    var description: String {
-        switch self {
-        case .requiresStaticStringLiteral:
-            return "#URL requires a static string literal"
-        case .malformedURL(let urlString):
-            return "The input URL is malformed: \(urlString)"
-        }
-    }
-}
-
-extension URL {
-    public enum Specfication {
-        case RFC3986
-    }
-    
-    /// Creates an URL instance from the provided string according to the RFC3986 specification.
-    /// - Parameters:
-    ///   - string: An URL location
-    ///   - specification: Specification used for validation
-    public init?(string: String, specification: Specfication = .RFC3986) {
-        switch specification {
-        case .RFC3986:
-            guard let components = URLComponents(string: string), let url = components.url else {
-                return nil
-            }
-                
-            self = url
-        }
-    }
-}
-
-
 public struct URLMacro: ExpressionMacro {
     public static func expansion(
         of node: some FreestandingMacroExpansionSyntax,
