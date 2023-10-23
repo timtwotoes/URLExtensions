@@ -1,12 +1,20 @@
+//
+//  URLExtensionsTests.swift
+//
+//
+//  Created by Tim Wolff on 23/10/2023.
+//
+
 import XCTest
 @testable import URLExtensions
 
 final class URLExtensionsTests: XCTestCase {
-    func testExample() throws {
-        // XCTest Documentation
-        // https://developer.apple.com/documentation/xctest
-
-        // Defining Test Cases and Test Methods
-        // https://developer.apple.com/documentation/xctest/defining_test_cases_and_test_methods
+    func testURLComponentsAddToPath() throws {
+        var components = try XCTUnwrap(URLComponents(string: "https://example.com"))
+        components.append(path: "hello")
+        components.append(path: "world/")
+        components.append(path: "test/one/")
+        let url = try XCTUnwrap(components.string)
+        XCTAssertEqual(url, "https://example.com/hello/world/test/one")
     }
 }

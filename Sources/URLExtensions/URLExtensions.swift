@@ -1,2 +1,6 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
+//
+//  URLExtensions.swift
+//
+//
+//  Created by Tim Wolff on 23/10/2023.
+//
