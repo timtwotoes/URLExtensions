@@ -9,13 +9,23 @@ import XCTest
 @testable import URLExtensions
 
 final class URLExtensionsTests: XCTestCase {
-    func testURLComponentsAddToPath() throws {
+    func testURLComponentsAppendPath() throws {
         var components = try XCTUnwrap(URLComponents(string: "https://example.com"))
         components.append(path: "hello")
         components.append(path: "world/")
         components.append(path: "test/one/")
-        let url = try XCTUnwrap(components.string)
-        XCTAssertEqual(url, "https://example.com/hello/world/test/one")
+        let string = try XCTUnwrap(components.string)
+        XCTAssertEqual(string, "https://example.com/hello/world/test/one")
+    }
+    
+    func testURLComponentsAddQuery() throws {
+        var components = try XCTUnwrap(URLComponents(string: "https://example.com"))
+        
+        components.addQuery("isMutable")
+        components.addQuery("title", value: "example")
+        
+        let string = try XCTUnwrap(components.string)
+        XCTAssertEqual(string, "https://example.com?isMutable&title=example")
     }
     
     func testURLClosureWithString() throws {

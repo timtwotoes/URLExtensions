@@ -8,7 +8,7 @@
 import Foundation
 
 extension URLComponents {
-    mutating public func addQueryItem(_ name: String, value: String? = nil) {
+    mutating public func addQuery(_ name: String, value: String? = nil) {
         if queryItems == nil {
             queryItems = [URLQueryItem]()
         }
