@@ -14,7 +14,7 @@ import Foundation
 ///
 /// produces an unwrapped `URL` if the URL is valid. Otherwise, it emits a compile-time error.
 @freestanding(expression)
-public macro URL(_ stringLiteral: String) -> URL = #externalMacro(module: "URLExtensionsMacros", type: "URLMacro")
+public macro URL(_ stringLiteral: StaticString) -> URL = #externalMacro(module: "URLExtensionsMacros", type: "URLMacro")
 
 extension URL {
     public init?(string: String, _ updateComponents: (_ components: inout URLComponents) -> ()) {

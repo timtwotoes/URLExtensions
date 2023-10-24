@@ -31,31 +31,15 @@ final class URLMacroTests: XCTestCase {
         )
     }
     
-    func testURLStringLiteralError() {
-        assertMacroExpansion(
-            #"""
-            #URL("https://www.example.com/\(Int.random())")
-            """#,
-            expandedSource: #"""
-            #URL("https://www.example.com/\(Int.random())")
-            """#,
-            diagnostics: [
-                DiagnosticSpec(message: "#URL requires a static string literal", line: 1, column: 1)
-            ],
-            macros: testMacros
-        )
-    }
-    
     func testURLStringMalformedError() {
         assertMacroExpansion(
             #"""
             #URL("https://www.example test.com/")
             """#,
             expandedSource: #"""
-            #URL("https://www.example test.com/")
             """#,
             diagnostics: [
-                DiagnosticSpec(message: "The input URL is malformed: \"https://www.example test.com/\"", line: 1, column: 1)
+                DiagnosticSpec(message: "URL is malformed according to the RFC3986 specification", line: 1, column: 6)
             ],
             macros: testMacros
         )

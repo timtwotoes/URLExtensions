@@ -9,6 +9,7 @@ import SwiftCompilerPlugin
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
+import SwiftDiagnostics
 import Foundation
 
 public struct URLMacro: ExpressionMacro {
@@ -16,24 +17,23 @@ public struct URLMacro: ExpressionMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        guard
-            /// 1. Grab the first (and only) Macro argument.
-            let argument = node.argumentList.first?.expression,
-            /// 2. Ensure the argument contains of a single String literal segment.
-            let segments = argument.as(StringLiteralExprSyntax.self)?.segments,
-            segments.count == 1,
-            /// 3. Grab the actual String literal segment.
-            case .stringSegment(let literalSegment)? = segments.first
-        else {
-            throw URLMacroError.requiresStaticStringLiteral
-        }
-
+        let urlString = extract(argument: node.argumentList)
         /// 4. Validate whether the String literal matches a valid URL structure.
-        guard let _ = URL(string: literalSegment.content.text, specification: .RFC3986) else {
-            throw URLMacroError.malformedURL(urlString: "\(argument)")
+        guard let _ = URL(string: urlString, specification: .RFC3986) else {
+            let diagnostic = Diagnostic(node: node.argumentList.first!, message: URLExtensionsMacrosDiagnostic.malformedURL)
+            context.diagnose(diagnostic)
+            return ""
         }
 
-        return "URL(string: \(argument), specification: .RFC3986)!"
+        return "URL(string: \"\(raw: urlString)\", specification: .RFC3986)!"
+    }
+    
+    private static func extract(argument: LabeledExprListSyntax) -> String {
+        if case .stringSegment(let literalSegment) = argument.first!.expression.as(StringLiteralExprSyntax.self)!.segments.first! {
+            return literalSegment.content.text
+        }
+        // This will never happen. This macro will never be called in the first place, if no static string was passed to macro.
+        fatalError("Expected a static literal string from #URL but none found!")
     }
 }
 
