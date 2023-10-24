@@ -3,7 +3,7 @@ Adds convenience methods to Swift Foundations URL structure that aids in constru
 
 ## Usage
 
-* Constructing an URL using the URL macro
+**Constructing an URL using the URL macro**
 
 ```swift
 let url = #URL("https://example.com")
@@ -12,7 +12,7 @@ let url = #URL("https://example.com")
 Validates the URL at compile time and produces an unwrapped URL. The string passed to the macro must be a static string.
 No string interpolations allowed.
 
-* Constructing an URL with components
+**Constructing an URL with components**
 
 ```swift
 let url = URL(string: "https://api.example.org") { components in
@@ -24,7 +24,7 @@ let url = URL(string: "https://api.example.org") { components in
 
 Produces the url "https://api.example.org/book?title=Sherlock%20Holmes&isAvailable". Note that it must be unwrapped.
 
-* Modifying an URL in place with components
+**Modifying an URL in place with components**
 
 ```swift
 var url = #URL("https://api.example.org")
@@ -39,7 +39,7 @@ let didModifyURL: Bool = url.modify { components in
 Modifies the url in place and is now "https://api.example.org/book?title=Sherlock%20Holmes&isAvailable". The function
 returns if the URL was updated or not. It can be ignored.
 
-* Modify an URL by creating a new URL with components
+**Modify an URL by creating a new URL with components**
 
 ```swift
 let url = #URL("https://api.example.org")
