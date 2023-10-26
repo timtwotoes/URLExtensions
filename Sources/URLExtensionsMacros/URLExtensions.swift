@@ -11,7 +11,7 @@ extension URL {
     /// URL specifications
     public enum Specfication {
         /// The [RFC3986 specification](https://www.ietf.org/rfc/rfc3986.txt)
-        case RFC3986
+        case rfc3986
     }
     
     /// Creates an URL instance from the provided string according to the RFC3986 specification.
@@ -29,7 +29,7 @@ extension URL {
     ///   - specification: Specification used for validation
     public init?(string: String, specification: Specfication) {
         switch specification {
-        case .RFC3986:
+        case .rfc3986:
             guard let components = URLComponents(string: string), let url = components.url else {
                 return nil
             }

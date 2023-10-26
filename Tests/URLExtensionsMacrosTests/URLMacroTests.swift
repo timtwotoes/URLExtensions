@@ -25,7 +25,7 @@ final class URLMacroTests: XCTestCase {
             #URL("https://www.example.com/")
             """#,
             expandedSource: #"""
-            URL(string: "https://www.example.com/", specification: .RFC3986)!
+            URL(string: "https://www.example.com/", specification: .rfc3986)!
             """#,
             macros: testMacros
         )
@@ -39,7 +39,7 @@ final class URLMacroTests: XCTestCase {
             expandedSource: #"""
             """#,
             diagnostics: [
-                DiagnosticSpec(message: "URL is malformed according to the RFC3986 specification", line: 1, column: 6)
+                DiagnosticSpec(message: "URL is malformed according to the rfc3986 specification", line: 1, column: 6)
             ],
             macros: testMacros
         )

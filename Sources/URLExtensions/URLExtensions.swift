@@ -16,7 +16,7 @@ public macro URL(_ stringLiteral: StaticString) -> URL = #externalMacro(module: 
 extension URL {
     /// Initialize an URL using URLComponents.
     ///
-    /// URLComponents uses the RFC3986 specification. URL uses  older specifications.
+    /// URLComponents uses the rfc3986 specification. URL uses  older specifications.
     /// Example of usage:
     ///
     /// ```swift
@@ -46,11 +46,11 @@ extension URL {
 
     /// Initialize an URL using URLComponents with another URL as a base.
     ///
-    /// URLComponents uses the RFC3986 specification. URL uses older specifications.
+    /// URLComponents uses the rfc3986 specification. URL uses older specifications.
     /// Example of usage:
     ///
     /// ```swift
-    /// let siteURL = URL(string: "https://example.com", specification: .RFC3986)
+    /// let siteURL = URL(string: "https://example.com", specification: .rfc3986)
     /// let url = URL(baseURL: siteURL) { components in
     ///     components.host = "api.example.com"
     /// }!
@@ -107,11 +107,11 @@ extension URL {
     
     /// Creates a new modified URL from the URL itself
     ///
-    /// URLComponents uses the RFC3986 specification. URL uses older specifications.
+    /// URLComponents uses the rfc3986 specification. URL uses older specifications.
     /// Example of usage:
     ///
     /// ```swift
-    /// let siteURL = URL(string: "https://example.com", specification: .RFC3986)
+    /// let siteURL = URL(string: "https://example.com", specification: .rfc3986)
     /// let newURL = siteURL.modify { components in
     ///     components.host = "api.example.com"
     /// }!

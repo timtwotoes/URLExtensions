@@ -19,7 +19,7 @@ public struct URLMacro: ExpressionMacro {
     ) throws -> ExprSyntax {
         let urlString = extract(argument: node.argumentList)
         /// 4. Validate whether the String literal matches a valid URL structure.
-        guard let _ = URL(string: urlString, specification: .RFC3986) else {
+        guard let _ = URL(string: urlString, specification: .rfc3986) else {
             let diagnostic = Diagnostic(node: node.argumentList.first!, message: URLExtensionsMacrosDiagnostic.malformedURL)
             context.diagnose(diagnostic)
             return ""

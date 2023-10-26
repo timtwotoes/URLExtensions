@@ -12,6 +12,14 @@ let url = #URL("https://example.com")
 Validates the URL at compile time and produces an unwrapped URL. The string passed to the macro must be a static string.
 No string interpolations allowed.
 
+**Constructing an URL using RFC3986**
+
+```swift
+let url = URL(string: "https://example.org", specification: .rfc3986)
+```
+
+Produces the URL "https://example.org" and is validated against the RFC3986 specification.
+
 **Constructing an URL with components**
 
 ```swift
