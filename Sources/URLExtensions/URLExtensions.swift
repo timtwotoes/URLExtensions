@@ -29,13 +29,13 @@ extension URL {
     ///
     /// - Parameters:
     ///   - string: An URL string
-    ///   - updateComponents: A closure for modifying the URL using URLComponents.
-    public init?(string: String, _ updateComponents: (_ components: inout URLComponents) -> ()) {
+    ///   - componentsHandler: A closure for modifying the URL using URLComponents.
+    public init?(string: String, _ componentsHandler: (_ components: inout URLComponents) -> ()) {
         guard var components = URLComponents(string: "\(string)") else {
             return nil
         }
         
-        updateComponents(&components)
+        componentsHandler(&components)
         
         guard let url = components.url else {
             return nil
@@ -59,13 +59,13 @@ extension URL {
     ///
     /// - Parameters:
     ///   - baseURL: An URL that serves as the base for modification
-    ///   - updateComponents: A closure for modifying the URL using URLComponents.
-    public init?(baseURL: URL, _ updateComponents: (_ components: inout URLComponents) -> ()) {
+    ///   - componentsHandler: A closure for modifying the URL using URLComponents.
+    public init?(baseURL: URL, _ componentsHandler: (_ components: inout URLComponents) -> ()) {
         guard var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: true) else {
             return nil
         }
         
-        updateComponents(&components)
+        componentsHandler(&components)
         
         guard let url = components.url else {
             return nil
@@ -88,14 +88,14 @@ extension URL {
     /// ```
     /// Produces an URL with the string "https://api.example.com"
     ///
-    /// - Parameter updateComponents: Closure for modifying URLComponents
+    /// - Parameter componentsHandler: Closure for modifying URLComponents
     /// - Returns: True if URL was modified. URL is only modified if it is well formed.
-    mutating public func modify(_ updateComponents: (_ components: inout URLComponents) -> ()) -> Bool {
+    mutating public func modify(_ componentsHandler: (_ components: inout URLComponents) -> ()) -> Bool {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
             return false
         }
         
-        updateComponents(&components)
+        componentsHandler(&components)
         
         guard let url = components.url else {
             return false
@@ -118,14 +118,14 @@ extension URL {
     /// ```
     /// Produces an URL with the string "https://api.example.com"
     /// 
-    /// - Parameter updateComponents: Closure for modifying URLComponents
+    /// - Parameter componentsHandler: Closure for modifying URLComponents
     /// - Returns: A new modified URL
-    public func modified(_ updateComponents: (_ components: inout URLComponents) -> ()) -> URL? {
+    public func modified(_ componentsHandler: (_ components: inout URLComponents) -> ()) -> URL? {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
             return nil
         }
         
-        updateComponents(&components)
+        componentsHandler(&components)
         
         return components.url        
     }

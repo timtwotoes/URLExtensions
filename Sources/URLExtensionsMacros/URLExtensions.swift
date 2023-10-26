@@ -27,7 +27,7 @@ extension URL {
     /// - Parameters:
     ///   - string: An URL location
     ///   - specification: Specification used for validation
-    public init?(string: String, specification: Specfication = .RFC3986) {
+    public init?(string: String, specification: Specfication) {
         switch specification {
         case .RFC3986:
             guard let components = URLComponents(string: string), let url = components.url else {

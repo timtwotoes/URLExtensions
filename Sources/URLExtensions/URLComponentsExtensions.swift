@@ -35,6 +35,7 @@ extension URLComponents {
     
     /// Append one or more path components.
     /// - Parameter path: One or more path strings separated with a slash
+    /// 
     /// - note: URLComponents automatically percent encode the path.
     mutating public func append(path: String) {
         guard path.isEmpty == false else {
